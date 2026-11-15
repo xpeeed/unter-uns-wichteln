@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="description" content="Eine kleine, geheime Wichtelrunde für dein Team.">
+  <title>Unter uns · Teamwichteln</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <a class="wordmark" href="./" aria-label="Unter uns, Startseite"><span class="brand-star" aria-hidden="true">✳</span> unter uns<span class="wordmark-dot">.</span></a>
+    <span class="header-caption">Kleine Geschenke. Großes Geheimnis.</span>
+  </header>
+
+  <main id="organizer">
+    <section class="intro" aria-labelledby="intro-title">
+      <div>
+        <p class="eyebrow">DEINE WICHTELRUNDE</p>
+        <h1 id="intro-title">Ein Name.<br>Ein kleines <em>Geheimnis.</em></h1>
+        <p class="intro-copy">Bring dein Team zusammen. Wir ziehen die Namen, du verteilst die persönlichen Links per Slack.</p>
+      </div>
+      <div class="gift-art" aria-hidden="true"><div class="gift-ribbon"></div><div class="gift-knot"></div><div class="gift-tag">für dich</div><span class="art-star star-one">✳</span><span class="art-star star-two">✳</span></div>
+    </section>
+
+    <div id="environment-note" class="notice" hidden></div>
+    <div id="fatal-error" class="notice error" role="alert" hidden></div>
+    <section id="setup" class="workspace" aria-labelledby="setup-title">
+      <div class="section-heading"><span class="step-number">01</span><div><p class="eyebrow">DER ANFANG</p><h2 id="setup-title">Wer ist dabei?</h2></div></div>
+      <form id="setup-form" novalidate>
+        <div class="setup-columns">
+          <div class="participant-field">
+            <div class="label-row"><label for="names">Dein Team</label><button id="demo-button" type="button" class="text-button">Beispiel einsetzen</button></div>
+            <textarea id="names" name="names" rows="8" maxlength="10000" placeholder="Felix&#10;Mira&#10;Jonas&#10;Lena" aria-describedby="names-hint" required></textarea>
+            <div class="field-foot"><span id="names-hint">Ein Name pro Zeile. 2 bis 100 Personen.</span><span id="name-count" aria-live="polite">0 Namen</span></div>
+          </div>
+          <div class="details-fields">
+            <div class="field"><label for="event">Name der Runde</label><input id="event" name="event" maxlength="100" value="Teamwichteln 2026" required></div>
+            <div class="two-fields"><div class="field"><label for="budget">Geschenkbudget <span>(optional)</span></label><input id="budget" name="budget" maxlength="60" placeholder="z. B. 20 €"></div><div class="field"><label for="date">Übergabe <span>(optional)</span></label><input id="date" name="date" type="date"></div></div>
+            <div class="field"><label for="base-url">Adresse dieser Webseite</label><input id="base-url" name="base-url" type="url" spellcheck="false" autocomplete="off" aria-describedby="url-hint" required><p class="field-hint" id="url-hint">Für dein Team brauchst du eine erreichbare HTTPS-Adresse. Auf der veröffentlichten Seite ist sie schon richtig eingetragen.</p></div>
+          </div>
+        </div>
+        <p id="form-error" class="inline-error" role="alert" hidden></p>
+        <div class="form-footer"><p>Niemand zieht sich selbst.<br>Jeder Name wird genau einmal vergeben.</p><button class="button primary" id="review-button" type="submit">Runde vorbereiten <span aria-hidden="true">↗</span></button></div>
+      </form>
+    </section>
+
+    <section id="review" class="workspace" aria-labelledby="review-title" hidden>
+      <div class="section-heading"><span class="step-number">02</span><div><p class="eyebrow">EIN LETZTER BLICK</p><h2 id="review-title" tabindex="-1">Bereit für die Ziehung?</h2></div></div>
+      <p id="review-summary" class="review-summary"></p><p id="review-details"></p>
+      <ul id="review-names" class="name-pills" aria-label="Teilnehmende"></ul>
+      <div class="notice">Du erhältst die persönlichen Links, aber keine offene Zuordnungsliste. Auch du kannst ein Ergebnis sehen, wenn du den entsprechenden Link öffnest.</div>
+      <p id="draw-error" class="inline-error" role="alert" hidden></p>
+      <div class="form-footer"><button type="button" id="edit-button" class="text-button">Angaben bearbeiten</button><button type="button" id="draw-button" class="button primary">Jetzt geheim auslosen <span aria-hidden="true">✳</span></button></div>
+    </section>
+
+    <section id="results" class="workspace" aria-labelledby="results-title" hidden>
+      <div class="section-heading"><span class="step-number">03</span><div><p class="eyebrow">DAS GEHEIMNIS STEHT</p><h2 id="results-title" tabindex="-1">Jetzt bist du der Postbote.</h2></div></div>
+      <p id="results-summary" class="results-summary"></p>
+      <div class="notice"><strong>Bitte zuerst deine Linkliste sichern.</strong> Wir speichern sie nicht. Nach dem Schließen oder Neuladen dieser Seite kannst du sie hier nicht wiederherstellen. Bereits verschickte Links bleiben gültig.</div>
+      <div class="result-actions"><button id="download-button" type="button" class="button secondary">Linkliste herunterladen</button><span>Enthält geheime Links. Nur für dich aufbewahren.</span></div>
+      <p class="field-hint">Kopiere die Nachricht und sende sie in der jeweiligen Slack-Direktnachricht. Keine Links in einen Teamkanal posten.</p>
+      <ul id="result-list" class="result-list" aria-label="Persönliche Wichtellinks"></ul>
+      <div class="new-round"><button id="reset-button" class="text-button" type="button">Eine neue Runde starten</button><div id="reset-confirm" class="notice" hidden><p>Alte Links bleiben gültig. Eine neue Ziehung ersetzt oder widerruft sie nicht. Sichere zuerst deine aktuelle Linkliste.</p><button id="reset-confirm-button" class="button secondary" type="button">Trotzdem neu beginnen</button><button id="reset-cancel-button" class="text-button" type="button">Abbrechen</button></div></div>
+    </section>
+    <aside class="privacy-note"><span aria-hidden="true">✳</span><p><strong>Ein Geheimnis, kein Nutzerkonto.</strong> Die Ziehung passiert in deinem Browser. Jeder Link enthält ein verschlüsseltes Ergebnis und den Schlüssel zum Öffnen. Keine Teilnehmerdatenbank, keine Tracker. Wer den Link hat, kann das Ergebnis öffnen.</p></aside>
+  </main>
+
+  <main id="recipient" class="recipient-main" hidden>
+    <section class="reveal-sheet" aria-labelledby="reveal-title">
+      <p class="eyebrow" id="reveal-event">DEINE WICHTELRUNDE</p>
+      <div id="reveal-start"><p id="reveal-greeting" class="recipient-greeting"></p><h1 id="reveal-title">Ein kleines<br><em>Geheimnis für dich.</em></h1><p>Dein Wichtelname wartet im Umschlag.<br>Öffne ihn, wenn du ungestört bist.</p><div class="envelope" aria-hidden="true"><span>nur für dich</span></div><button id="reveal-button" type="button" class="button primary">Meinen Namen aufdecken <span aria-hidden="true">↗</span></button></div>
+      <div id="reveal-result" hidden><p id="revealed-greeting" class="recipient-greeting"></p><h1 id="revealed-title" tabindex="-1">Du beschenkst</h1><p id="recipient-name" class="secret-name"></p><dl id="gift-details" class="gift-details"></dl><p class="secret-hint">Behalte den Namen für dich.<br>Dein Link öffnet immer dasselbe Ergebnis.</p><button id="hide-button" type="button" class="button secondary">Namen wieder verdecken</button></div>
+      <div id="reveal-error" hidden><h1>Dieser Link lässt sich nicht öffnen.</h1><p id="reveal-error-text" role="alert"></p><p>Bitte die organisierende Person um den vollständigen Link. Das Ergebnis geht beim Öffnen nicht verloren.</p></div>
+    </section>
+    <p class="recipient-footnote">Dein persönlicher Link ist der Schlüssel.<br>Bitte nicht weitergeben.</p>
+  </main>
+  <footer><span>unter uns. Für schöne Überraschungen.</span><span>Zufällig gezogen. Persönlich verschenkt.</span></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><p class="notice error">Bitte aktiviere JavaScript. Die sichere Ziehung und das Öffnen der Links passieren in deinem Browser.</p></noscript>
+</body>
+</html>
