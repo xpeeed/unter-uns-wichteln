@@ -180,6 +180,16 @@ function renderResults(round) {
     $("result-list").append(li);
   }
 }
+function downloadText(text, filename) {
+  const objectUrl = URL.createObjectURL(new Blob([text], { type: "text/plain;charset=utf-8" }));
+  const anchor = document.createElement("a");
+  anchor.href = objectUrl;
+  anchor.download = filename;
+  document.body.append(anchor);
+  anchor.click();
+  anchor.remove();
+  setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+}
 function initOrganizer() {
   const base = new URL(location.href);
   base.hash = "";
@@ -233,7 +243,7 @@ function initOrganizer() {
       for (let i = 0; i < round.names.length; i += 1) {
         const payload = { v: 1, giver: round.names[i], recipient: recipients[i], event: round.event, budget: round.budget, date: round.date };
         const link = await createSecretLink(round.baseUrl, payload);
-        generated.push({ giver: payload.giver, event: payload.event, budget: payload.budget, date: payload.date, link });
+        generated.push({ giver: payload.giver, recipient: payload.recipient, event: payload.event, budget: payload.budget, date: payload.date, link });
       }
       linkRows = generated;
       renderResults(round);
@@ -249,15 +259,15 @@ function initOrganizer() {
   $("download-button").addEventListener("click", () => {
     if (!linkRows.length) return;
     const text = `GEHEIME WICHTELLINKS · ${pendingRound.event}\nNur für die organisierende Person. Wer einen Link besitzt, kann das zugehörige Ergebnis öffnen.\nEs wurde noch keine Nachricht automatisch versendet.\n\n${linkRows.map(messageFor).join("\n\n" + "=".repeat(50) + "\n\n")}\n`;
-    const objectUrl = URL.createObjectURL(new Blob([text], { type: "text/plain;charset=utf-8" }));
-    const anchor = document.createElement("a");
-    anchor.href = objectUrl;
-    anchor.download = `wichtellinks-${new Date().toISOString().slice(0, 10)}.txt`;
-    document.body.append(anchor);
-    anchor.click();
-    anchor.remove();
-    setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+    downloadText(text, `wichtellinks-${new Date().toISOString().slice(0, 10)}.txt`);
     notify("Download angestoßen. Bewahre die Datei privat auf.");
+  });
+  $("assignment-download-button").addEventListener("click", () => {
+    if (!linkRows.length || !pendingRound) return;
+    const details = roundDetails(pendingRound);
+    const text = `GEHEIME ZULOSUNG · ${pendingRound.event}\nNur für die organisierende Person. Diese Datei zeigt alle Zuordnungen offen. Nicht im Team teilen.\n${details ? details + "\n" : ""}\nWER BESCHENKT WEN?\n\n${linkRows.map((row, index) => `${index + 1}. ${row.giver} → ${row.recipient}`).join("\n")}\n`;
+    downloadText(text, `wichtel-zulosung-${new Date().toISOString().slice(0, 10)}.txt`);
+    notify("Download angestoßen. Die Zulosung enthält alle Namen offen. Bitte privat aufbewahren.");
   });
   $("reset-button").addEventListener("click", () => { $("reset-confirm").hidden = false; $("reset-confirm-button").focus(); });
   $("reset-cancel-button").addEventListener("click", () => { $("reset-confirm").hidden = true; $("reset-button").focus(); });

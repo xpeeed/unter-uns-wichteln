@@ -53,7 +53,7 @@
       <div class="section-heading"><span class="step-number">02</span><div><p class="eyebrow">EIN LETZTER BLICK</p><h2 id="review-title" tabindex="-1">Bereit für die Ziehung?</h2></div></div>
       <p id="review-summary" class="review-summary"></p><p id="review-details"></p>
       <ul id="review-names" class="name-pills" aria-label="Teilnehmende"></ul>
-      <div class="notice">Du erhältst die persönlichen Links, aber keine offene Zuordnungsliste. Auch du kannst ein Ergebnis sehen, wenn du den entsprechenden Link öffnest.</div>
+      <div class="notice">Du erhältst die persönlichen Links. Zusätzlich kannst du eine offene Zulosungsliste herunterladen, die zeigt, wer wen beschenkt. Beide Listen sind nur für dich und dürfen nicht im Team geteilt werden.</div>
       <p id="draw-error" class="inline-error" role="alert" hidden></p>
       <div class="form-footer"><button type="button" id="edit-button" class="text-button">Angaben bearbeiten</button><button type="button" id="draw-button" class="button primary">Jetzt geheim auslosen <span aria-hidden="true">✳</span></button></div>
     </section>
@@ -61,8 +61,9 @@
     <section id="results" class="workspace" aria-labelledby="results-title" hidden>
       <div class="section-heading"><span class="step-number">03</span><div><p class="eyebrow">DAS GEHEIMNIS STEHT</p><h2 id="results-title" tabindex="-1">Jetzt bist du der Postbote.</h2></div></div>
       <p id="results-summary" class="results-summary"></p>
-      <div class="notice"><strong>Bitte zuerst deine Linkliste sichern.</strong> Wir speichern sie nicht. Nach dem Schließen oder Neuladen dieser Seite kannst du sie hier nicht wiederherstellen. Bereits verschickte Links bleiben gültig.</div>
-      <div class="result-actions"><button id="download-button" type="button" class="button secondary">Linkliste herunterladen</button><span>Enthält geheime Links. Nur für dich aufbewahren.</span></div>
+      <div class="notice"><strong>Bitte zuerst deine Linkliste sichern.</strong> Optional kannst du auch die offene Zulosung herunterladen. Wir speichern keine der Listen. Nach dem Schließen oder Neuladen dieser Seite kannst du sie hier nicht wiederherstellen. Bereits verschickte Links bleiben gültig.</div>
+      <div class="result-actions"><button id="download-button" type="button" class="button secondary">Linkliste herunterladen</button><button id="assignment-download-button" type="button" class="button secondary" aria-describedby="download-privacy-hint">Zulosung herunterladen</button><span id="download-privacy-hint">Geheime Links und offene Zuordnungen. Beide Dateien nur für dich aufbewahren.</span></div>
+      <p class="field-hint">Die Webseite ist öffentlich. Diese Ergebnisübersicht existiert nur in deinem geöffneten Browser, ohne Anmeldung. Wer dieses Browserfenster oder deine Dateien nutzen kann, kann die Ergebnisse sehen.</p>
       <p class="field-hint">Kopiere die Nachricht und sende sie in der jeweiligen Slack-Direktnachricht. Keine Links in einen Teamkanal posten.</p>
       <ul id="result-list" class="result-list" aria-label="Persönliche Wichtellinks"></ul>
       <div class="new-round"><button id="reset-button" class="text-button" type="button">Eine neue Runde starten</button><div id="reset-confirm" class="notice" hidden><p>Alte Links bleiben gültig. Eine neue Ziehung ersetzt oder widerruft sie nicht. Sichere zuerst deine aktuelle Linkliste.</p><button id="reset-confirm-button" class="button secondary" type="button">Trotzdem neu beginnen</button><button id="reset-cancel-button" class="text-button" type="button">Abbrechen</button></div></div>
